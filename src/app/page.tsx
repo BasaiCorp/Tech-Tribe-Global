@@ -1,103 +1,206 @@
-import Image from "next/image";
+"use client";
+
+import { useUser } from "@clerk/nextjs";
+import Header from "@/components/layout/Header";
+import Sidebar from "@/components/layout/Sidebar";
+import Footer from "@/components/layout/Footer";
+import CreatePost from "@/components/home/CreatePost";
+import PostCard from "@/components/home/PostCard";
+import TrendingTopics from "@/components/home/TrendingTopics";
+import SuggestedUsers from "@/components/home/SuggestedUsers";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from "next/link";
+
+// Mock data for posts
+const mockPosts = [
+  {
+    id: "1",
+    author: {
+      name: "John Doe",
+      username: "johndoe",
+      avatar: "/api/placeholder/40/40"
+    },
+    content: "Just shipped a new feature using Next.js 15! The performance improvements are incredible. Server components are game-changing for React development. What's everyone's experience with the new version?",
+    timestamp: "2h",
+    likes: 42,
+    comments: 8,
+    shares: 3,
+    tags: ["NextJS", "React", "WebDev"],
+    isLiked: false,
+    isBookmarked: false
+  },
+  {
+    id: "2",
+    author: {
+      name: "Jane Smith",
+      username: "janesmith",
+      avatar: "/api/placeholder/40/40"
+    },
+    content: "Working on a new AI project that analyzes code patterns. The intersection of machine learning and software development is fascinating. Anyone else exploring AI-assisted development tools?",
+    timestamp: "4h",
+    likes: 67,
+    comments: 15,
+    shares: 7,
+    tags: ["AI", "MachineLearning", "CodeAnalysis"],
+    isLiked: true,
+    isBookmarked: true
+  },
+  {
+    id: "3",
+    author: {
+      name: "Mike Johnson",
+      username: "mikej",
+      avatar: "/api/placeholder/40/40"
+    },
+    content: "TypeScript 5.3 brings some amazing new features! The type inference improvements make the developer experience so much smoother. Time to update all my projects 🚀",
+    timestamp: "6h",
+    likes: 89,
+    comments: 23,
+    shares: 12,
+    tags: ["TypeScript", "JavaScript", "DeveloperExperience"],
+    isLiked: false,
+    isBookmarked: false
+  },
+  {
+    id: "4",
+    author: {
+      name: "Sarah Wilson",
+      username: "sarahw",
+      avatar: "/api/placeholder/40/40"
+    },
+    content: "Just finished reading about the latest trends in web accessibility. It's amazing how small changes can make such a big difference for users with disabilities. Every developer should prioritize a11y!",
+    timestamp: "8h",
+    likes: 156,
+    comments: 34,
+    shares: 28,
+    tags: ["Accessibility", "WebDev", "UX"],
+    isLiked: true,
+    isBookmarked: false
+  }
+];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { isSignedIn, user } = useUser();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  if (!isSignedIn) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <div className="space-y-4">
+              <h1 className="text-4xl md:text-6xl font-bold text-foreground">
+                Welcome to <span className="text-primary">TechTribe</span>
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Connect with tech enthusiasts, share knowledge, and stay updated with the latest in technology.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" asChild>
+                <Link href="/sign-up">Join TechTribe</Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/sign-in">Sign In</Link>
+              </Button>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 mt-16">
+              <Card>
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <span className="text-primary text-2xl">💬</span>
+                  </div>
+                  <h3 className="font-semibold mb-2">Connect</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Join conversations with developers, designers, and tech enthusiasts worldwide.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <span className="text-primary text-2xl">🚀</span>
+                  </div>
+                  <h3 className="font-semibold mb-2">Share</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Share your projects, insights, and discoveries with the community.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <span className="text-primary text-2xl">📚</span>
+                  </div>
+                  <h3 className="font-semibold mb-2">Learn</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Stay updated with the latest trends, tools, and best practices in tech.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <div className="flex">
+        <Sidebar />
+        
+        <main className="flex-1 lg:ml-64">
+          <div className="max-w-6xl mx-auto px-4 py-6">
+            <div className="grid lg:grid-cols-3 gap-6">
+              {/* Main Feed */}
+              <div className="lg:col-span-2 space-y-6">
+                <Tabs defaultValue="for-you" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="for-you">For You</TabsTrigger>
+                    <TabsTrigger value="following">Following</TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="for-you" className="space-y-6 mt-6">
+                    <CreatePost />
+                    
+                    <div className="space-y-4">
+                      {mockPosts.map((post) => (
+                        <PostCard key={post.id} post={post} />
+                      ))}
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="following" className="space-y-6 mt-6">
+                    <CreatePost />
+                    
+                    <div className="space-y-4">
+                      {mockPosts.slice(0, 2).map((post) => (
+                        <PostCard key={post.id} post={post} />
+                      ))}
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+              
+              {/* Right Sidebar */}
+              <div className="space-y-6">
+                <TrendingTopics />
+                <SuggestedUsers />
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      <Footer />
     </div>
   );
 }
