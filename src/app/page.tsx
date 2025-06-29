@@ -1,103 +1,108 @@
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { MessageCircle, Heart, Repeat, Send } from "lucide-react";
 
-export default function Home() {
+// Mock data for posts - replace with actual data fetching later
+const posts = [
+  {
+    id: 1,
+    user: {
+      name: "Alice Wonderland",
+      username: "alicew",
+      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    },
+    content: "Just discovered this amazing new tech community! Excited to connect with everyone. What are your favorite Next.js features? #NextJS #WebDev",
+    timestamp: "2h ago",
+    likes: 152,
+    comments: 18,
+    reposts: 3,
+  },
+  {
+    id: 2,
+    user: {
+      name: "Bob The Builder",
+      username: "bobuilds",
+      avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    },
+    content: "Working on a new project using Tailwind CSS and Shadcn UI. The developer experience is fantastic! What are your go-to UI libraries? Let's discuss! #TailwindCSS #ShadcnUI",
+    timestamp: "5h ago",
+    likes: 289,
+    comments: 45,
+    reposts: 12,
+  },
+  {
+    id: 3,
+    user: {
+      name: "Charlie Brown",
+      username: "goodgrief",
+      avatar: "https://randomuser.me/api/portraits/men/50.jpg",
+    },
+    content: "Just deployed my first app with Vercel and NeonDB. Smooth sailing so far! Any tips for optimizing serverless functions? #Vercel #Serverless #NeonDB",
+    timestamp: "1d ago",
+    likes: 98,
+    comments: 22,
+    reposts: 5,
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="space-y-6">
+      {/* Potentially a "Create Post" component here */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Create Post</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* Basic text area for now, can be expanded */}
+          <textarea
+            placeholder="What's on your mind?"
+            className="w-full p-2 border border-border rounded-md bg-muted text-foreground focus:ring-2 focus:ring-primary"
+            rows={3}
+          ></textarea>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button>Post</Button>
+        </CardFooter>
+      </Card>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      {/* Feed of posts */}
+      <div className="space-y-4">
+        {posts.map((post) => (
+          <Card key={post.id} className="overflow-hidden">
+            <CardHeader className="flex flex-row items-start space-x-4 p-4">
+              <Avatar>
+                <AvatarImage src={post.user.avatar} alt={post.user.name} />
+                <AvatarFallback>{post.user.name.substring(0, 2).toUpperCase()}</AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <div className="flex items-center space-x-2">
+                  <span className="font-semibold text-foreground">{post.user.name}</span>
+                  <span className="text-xs text-muted-foreground">@{post.user.username}</span>
+                  <span className="text-xs text-muted-foreground">&middot;</span>
+                  <span className="text-xs text-muted-foreground">{post.timestamp}</span>
+                </div>
+                <p className="text-sm text-foreground mt-1 whitespace-pre-wrap">{post.content}</p>
+              </div>
+            </CardHeader>
+            <CardFooter className="flex justify-around p-2 border-t border-border">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+                <MessageCircle className="h-4 w-4 mr-1" /> {post.comments}
+              </Button>
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-green-500">
+                <Repeat className="h-4 w-4 mr-1" /> {post.reposts}
+              </Button>
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-red-500">
+                <Heart className="h-4 w-4 mr-1" /> {post.likes}
+              </Button>
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+                <Send className="h-4 w-4" />
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
