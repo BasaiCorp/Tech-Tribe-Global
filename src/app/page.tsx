@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
@@ -92,7 +90,7 @@ export default function Home() {
               Simple. Powerful. Elegant.
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">
-              Write less code, do more with Razen's intuitive syntax
+              Write less code, do more with Razen&apos;s intuitive syntax
             </p>
           </div>
           
@@ -115,7 +113,7 @@ fn main() {
     // Variables are immutable by default
     let message = "Welcome to Razen";
     
-    // Mutable variables use 'mut'
+    // Mutable variables use mut
     let mut counter = 0;
     
     // Pattern matching
@@ -166,7 +164,7 @@ fn main() {
               {
                 icon: "fas fa-code",
                 title: "Expressive Syntax",
-                description: "Clean, readable syntax that doesn't sacrifice power for simplicity.",
+                description: "Clean, readable syntax that doesn&apos;t sacrifice power for simplicity.",
                 color: "text-blue-500"
               },
               {
